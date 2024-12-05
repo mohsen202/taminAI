@@ -14,7 +14,7 @@ async function sendMessage() {
 
     // Send request to Gradio server
     try {
-        const response = await fetch('https://b21b7a3338ef354a18.gradio.live/api/predict', {
+        const response = await fetch('https://71bf507d2731ca29d7.gradio.live/api/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
