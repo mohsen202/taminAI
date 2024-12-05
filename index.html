@@ -14,6 +14,24 @@
             height: 100vh;
             background-color: #f4f4f4;
         }
+        #header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        #logo-text {
+            font-size: 18px;
+            color: #333;
+        }
         #chat-container {
             flex: 1;
             padding: 20px;
@@ -83,6 +101,10 @@
     <link href="https://cdn.jsdelivr.net/npm/vazir-font/dist/font-face.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <div id="header">
+        <img id="logo" src="https://github.com/mohsen202/taminAI/blob/main/logo.png?raw=true" alt="لوگو">
+        <div id="logo-text">اولین مدل هوش مصنوعی تامین</div>
+    </div>
     <div id="chat-container"></div>
     <div id="input-container">
         <input type="text" id="input-text" placeholder="پیام خود را بنویسید..." />
