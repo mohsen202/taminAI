@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradio Client Example</title>
+    <script type="module">
+        import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@latest/dist/index.min.js";
+
+        async function runPrediction() {
+            try {
+                const client = await Client.connect("https://71bf507d2731ca29d7.gradio.live/");
+                const result = await client.predict("/predict", { 
+                    input_text: "Hello!!", 
+                });
+
+                console.log(result.data);
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        }
+
+        // Run the prediction function when the script loads
+        runPrediction();
+    </script>
+</head>
+<body>
+    <h1>Gradio Client Example</h1>
+    <p>Check the console for the prediction result.</p>
+</body>
+</html>
