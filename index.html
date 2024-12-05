@@ -3,29 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradio Client Example</title>
+    <title>Chatbot Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #chat-container {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            background-color: #f4f4f4;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user {
+            text-align: right;
+        }
+        .bot {
+            text-align: left;
+        }
+        #input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #fff;
+        }
+        #input-text {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <div id="input-container">
+        <input type="text" id="input-text" placeholder="Type a message..." />
+        <button id="send-button">Send</button>
+    </div>
+
     <script type="module">
         import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@latest/dist/index.min.js";
 
-        async function runPrediction() {
+        const client = await Client.connect("https://71bf507d2731ca29d7.gradio.live/");
+
+        const chatContainer = document.getElementById('chat-container');
+        const inputText = document.getElementById('input-text');
+        const sendButton = document.getElementById('send-button');
+
+        function addMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const userMessage = inputText.value.trim();
+            if (!userMessage) return;
+
+            addMessage(userMessage, 'user');
+            inputText.value = '';
+
             try {
-                const client = await Client.connect("https://71bf507d2731ca29d7.gradio.live/");
                 const result = await client.predict("/predict", { 
-                    input_text: "Hello!!", 
+                    input_text: userMessage, 
                 });
 
-                console.log(result.data);
+                const botResponse = result.data[0]; // Assuming the response is in the first element of the result data
+                addMessage(botResponse, 'bot');
             } catch (error) {
                 console.error("An error occurred:", error);
+                addMessage("An error occurred. Please try again.", 'bot');
             }
         }
 
-        // Run the prediction function when the script loads
-        runPrediction();
+        sendButton.addEventListener('click', sendMessage);
+        inputText.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
-</head>
-<body>
-    <h1>Gradio Client Example</h1>
-    <p>Check the console for the prediction result.</p>
 </body>
 </html>
