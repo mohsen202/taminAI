@@ -1,65 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Interface</title>
+    <title>مدل زبانی هوش مصنوعی تامین</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Vazir', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        #logo-text {
+            font-size: 18px;
+            color: #333;
         }
         #chat-container {
             flex: 1;
             padding: 20px;
             border: 1px solid #ccc;
             overflow-y: auto;
-            background-color: #f4f4f4;
+            background-color: #fff;
+            margin: 10px;
+            border-radius: 10px;
         }
         .message {
             margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
         }
         .user {
             text-align: right;
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
         }
         .bot {
             text-align: left;
+            background-color: #e9ecef;
+            color: #333;
+            align-self: flex-start;
         }
         #input-container {
             display: flex;
             padding: 10px;
             border-top: 1px solid #ccc;
             background-color: #fff;
+            margin: 10px;
+            border-radius: 10px;
         }
         #input-text {
             flex: 1;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             margin-right: 10px;
+            font-size: 16px;
         }
         #send-button {
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #007bff;
             color: white;
             cursor: pointer;
+            font-size: 16px;
         }
         #send-button:hover {
             background-color: #0056b3;
         }
+        @media (max-width: 600px) {
+            #input-container {
+                flex-direction: column;
+            }
+            #input-text {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/vazir-font/dist/font-face.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <div id="header">
+        <img id="logo" src="https://github.com/mohsen202/taminAI/blob/main/logo.png?raw=true" alt="لوگو">
+        <div id="logo-text">اولین مدل هوش مصنوعی تامین</div>
+    </div>
     <div id="chat-container"></div>
     <div id="input-container">
-        <input type="text" id="input-text" placeholder="Type a message..." />
-        <button id="send-button">Send</button>
+        <input type="text" id="input-text" placeholder="پیام خود را بنویسید..." />
+        <button id="send-button">ارسال</button>
     </div>
 
     <script type="module">
@@ -95,7 +144,7 @@
                 addMessage(botResponse, 'bot');
             } catch (error) {
                 console.error("An error occurred:", error);
-                addMessage("An error occurred. Please try again.", 'bot');
+                addMessage("خطا رخ داد. لطفاً مجدداً تلاش کنید.", 'bot');
             }
         }
 
